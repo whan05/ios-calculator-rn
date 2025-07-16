@@ -6,8 +6,8 @@ import { useCalculator } from '../hooks/useCalculator';
 
 export const CalculatorScreen = () => {
   const {
-    number,
     prevNumber,
+    formula,
     buildNumber,
     toggleSign,
     deleteOperation,
@@ -16,18 +16,22 @@ export const CalculatorScreen = () => {
     multiplyOperation,
     subtractOperation,
     addOperation,
-    calculateResult
+    calculateResult,
   } = useCalculator();
 
   return (
     <View style={styles.calculatorContainer}>
       <View style={{ paddingHorizontal: 30, paddingBottom: 20 }}>
         <Text adjustsFontSizeToFit numberOfLines={1} style={styles.mainResult}>
-          {number}
+          {formula}
         </Text>
-        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.subResult}>
-          {prevNumber === '0' ? '' : prevNumber}
-        </Text>
+        {formula === prevNumber ? (
+          <Text style={styles.subResult}></Text>
+        ) : (
+          <Text adjustsFontSizeToFit numberOfLines={1} style={styles.subResult}>
+            {prevNumber}
+          </Text>
+        )}
       </View>
       <View style={styles.row}>
         <CalculatorButton
@@ -133,7 +137,7 @@ export const CalculatorScreen = () => {
           color={colors.lightkGray}
         />
         <CalculatorButton
-          onPress={ calculateResult }
+          onPress={calculateResult}
           label="="
           color={colors.orange}
         />
